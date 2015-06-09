@@ -35,7 +35,9 @@ class Note: NSObject {
         //looping thru notes and convert them to dictionary
         for var i:Int = 0;i < allNotes.count; i++ {
             aDictionary.append(allNotes[i].dictionary())
+            
         }
+        println(aDictionary)
         //saving to persistent storage
         NSUserDefaults.standardUserDefaults().setObject(aDictionary, forKey: kAllNotes)
     }

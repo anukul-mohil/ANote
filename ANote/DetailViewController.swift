@@ -47,17 +47,18 @@ class DetailViewController: UIViewController {
         notesDescription.becomeFirstResponder()
     }
 
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        if notesDescription == "" {
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        if notesDescription.text == "" {
             allNotes.removeAtIndex(currentNoteIndex)
         }
-        else{
+        else {
             allNotes[currentNoteIndex].note = notesDescription.text
         }
         Note.saveNotes()
         noteTable?.reloadData()
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
