@@ -30,7 +30,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="ANote" id="Xt4-eM-Nfg">
-                        <barButtonItem key="backBarButtonItem" title="Cancel" id="nSt-wS-PlQ"/>
+                        <barButtonItem key="backBarButtonItem" title="Save" id="nSt-wS-PlQ"/>
                     </navigationItem>
                     <connections>
                         <outlet property="toDoListTable" destination="G5I-H5-XLi" id="tNt-Df-d1S"/>
@@ -71,12 +71,12 @@
                             <navigationBar contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aAT-sW-He4">
                                 <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                             </navigationBar>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PXQ-ZR-DqQ">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PXQ-ZR-DqQ">
                                 <rect key="frame" x="16" y="92" width="568" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Text Area" translatesAutoresizingMaskIntoConstraints="NO" id="FZy-UI-Fc1">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" text="Text Area" translatesAutoresizingMaskIntoConstraints="NO" id="FZy-UI-Fc1">
                                 <rect key="frame" x="16" y="141" width="568" height="407"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -97,9 +97,9 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Your Note" id="bnz-0y-GuV">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="I5b-3P-5r1">
+                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="rR5-7m-8dl">
                             <connections>
-                                <action selector="saveButton:" destination="pPo-zp-EYu" id="ZuI-UC-1Fv"/>
+                                <segue destination="ey0-nh-pkz" kind="show" id="Ohk-bd-CGr"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -114,4 +114,7 @@
             <point key="canvasLocation" x="-187" y="290"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Ohk-bd-CGr"/>
+    </inferredMetricsTieBreakers>
 </document>

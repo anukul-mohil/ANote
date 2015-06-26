@@ -13,31 +13,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var notesTitle: UITextField!
     @IBOutlet weak var notesDescription: UITextView!
 
-//    var detailItem: AnyObject? {
-//        didSet {
-//            // Update the view.
-//            self.configureView()
-//        }
-//    }
-    var editTitle = "hoge"
-    var editDesc = "hoge"
-    
-    func configureView() {
-        // Update the user interface for the detail item.
-//        if let detail: AnyObject = self.detailItem {
-//            if let label = self.noteTitle {
-//                label.text = detail.description
-//            }
-//        }
-       // notesTitle.text = self.editTitle
-        //notesDescription.text = self.editDesc
-        
-//        if let result = self.detailItem as? String{
-//            println("Received value is \(result)")
-//            notesDescription.text = result
-//        }
-    }
-
+    var flag = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +25,23 @@ class DetailViewController: UIViewController {
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        if (notesDescription.text.isEmpty) {
+            allNotes.removeAtIndex(currentNoteIndex)
+            println("Index to be deleted is \(currentNoteIndex)")
+        }
+//        for var i:Int = 0;i < allNotes.count; i++ {
+        for var i:Int = 0;i < allNotes.count; i++ {
+            println("Array data is \(allNotes[i].note)")
+        }
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func saveButton(sender: AnyObject) {
         if notesDescription.text == "" {
             allNotes.removeAtIndex(currentNoteIndex)
         }
@@ -57,30 +50,13 @@ class DetailViewController: UIViewController {
         }
         Note.saveNotes()
         noteTable?.reloadData()
+        self.navigationController!.popViewControllerAnimated(true)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        // Get the new view controller using segue.destinationViewController.
-//        // Pass the selected object to the new view controller.
-//        let controller = segue.destinationViewController as! MasterTableViewController
-//        println("Deleted value is \(self.editTitle)")
-////        controller.notesDB[self.editTitle] = nil
-////        controller.notesDB.removeValueForKey(self.editTitle)
-////        controller.notesDB.updateValue(notesDescription.text, forKey: notesTitle.text)
-//    }
 
     //To enable users to tap outside writing space to dismiss keyboard
 //    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
 //        self.view.endEditing(true)
 //    }
+
 }

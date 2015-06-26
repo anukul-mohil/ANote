@@ -8,26 +8,44 @@
 
 import UIKit
 
-class MasterTableViewController: UITableViewController {
+class MasterTableViewController: UITableViewController, UISearchResultsUpdating {
+    
+    //Global variables
+    var filteredTableData = [String]()
+    var resultSearchController = UISearchController()
     
     @IBOutlet var toDoListTable: UITableView!
-//    var notesDB = ["FUJIQ": "Schedule the next trip to Fuji Q", "Meetings": "Meeting with provisioning team on Monday", "Pay Bills": "Pay Room rent , Electricity bill","Things to buy": "Buy a Car"]
-//    
+    
         override func viewDidLoad() {
         super.viewDidLoad()
             Note.loadNotes()
             noteTable = self.tableView
             
         // Uncomment the following line to preserve selection between presentations
-//         self.clearsSelectionOnViewWillAppear = false
+        // self.clearsSelectionOnViewWillAppear = false
             
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
          self.navigationItem.leftBarButtonItem = self.editButtonItem()
          let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
-        self.navigationItem.rightBarButtonItem = addButton
+         self.navigationItem.rightBarButtonItem = addButton
+            for var i:Int = 0;i < allNotes.count; i++ {
+//            println(allNotes[i].note)
+            }
+            self.resultSearchController = ({
+                let controller = UISearchController(searchResultsController: nil)
+                controller.searchResultsUpdater = self
+                controller.dimsBackgroundDuringPresentation = false
+                controller.searchBar.sizeToFit()
+                
+                self.tableView.tableHeaderView = controller.searchBar
+                
+                return controller
+            })()
+            
+            // Reload the table
+            self.tableView.reloadData()
+
     }
-    
-//    var titlesArray = ["FUJIQ","Meetings","Pay Bills","Things to buy"]
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -47,7 +65,13 @@ class MasterTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allNotes.count
+        
+        if (self.resultSearchController.active) {
+            return self.filteredTableData.count
+        }
+        else {
+            return allNotes.count
+        }
     }
 
     
@@ -57,10 +81,33 @@ class MasterTableViewController: UITableViewController {
         // Configure the cell...
 //        cell.textLabel!.text = titlesArray[indexPath.row]
         let object = allNotes[indexPath.row]
-        cell.textLabel!.text = object.note
-        return cell
+        
+        if (self.resultSearchController.active) {
+            cell.textLabel?.text = filteredTableData[indexPath.row]
+            
+            return cell
+        }
+        else {
+            cell.textLabel!.text = object.note
+            return cell
+        }
+        
     }
     
+    func updateSearchResultsForSearchController(searchController: UISearchController)
+    {
+        filteredTableData.removeAll(keepCapacity: false)
+        var tempArray = [String]()
+        for index in allNotes{
+            tempArray.append(allNotes[index].note)
+        }
+        let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text)
+        let array = (tempArray as NSArray).filteredArrayUsingPredicate(searchPredicate)
+        filteredTableData = array as! [String]
+        
+        self.tableView.reloadData()
+    }
+
     //update table values
 //    override func viewDidAppear(animated: Bool) {
 //        toDoListTable.reloadData()
@@ -81,6 +128,7 @@ class MasterTableViewController: UITableViewController {
             allNotes.removeAtIndex(indexPath.row)
             // Delete the row from the data source
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            Note.saveNotes()
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -109,18 +157,6 @@ class MasterTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
-//        if segue.identifier == "arrayDetail" {
-//            if let indexPath = self.tableView.indexPathForSelectedRow(){
-//                let rowIndex = indexPath.row
-//                let notesDescription = notesDB[titlesArray[rowIndex]]
-//                let controller = segue.destinationViewController as! DetailViewController
-//                println("Title passed is \(titlesArray[rowIndex]) and Description passed is \(notesDescription)")
-//                controller.editTitle = titlesArray[rowIndex]
-//                controller.editDesc = notesDescription!
-////                notesDB.removeValueForKey(titlesArray[rowIndex])
-//            }
-//            
-//        }
         if segue.identifier == "arrayDetail"{
             if let indexPath = self.tableView.indexPathForSelectedRow(){
                 let object = allNotes[indexPath.row]
