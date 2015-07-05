@@ -18,32 +18,30 @@ class MasterTableViewController: UITableViewController, UISearchResultsUpdating 
     
         override func viewDidLoad() {
         super.viewDidLoad()
-            Note.loadNotes()
-            noteTable = self.tableView
+        Note.loadNotes()
+        noteTable = self.tableView
             
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
             
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-         self.navigationItem.leftBarButtonItem = self.editButtonItem()
-         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
-         self.navigationItem.rightBarButtonItem = addButton
-            for var i:Int = 0;i < allNotes.count; i++ {
-//            println(allNotes[i].note)
-            }
-            self.resultSearchController = ({
+        self.navigationItem.leftBarButtonItem = self.editButtonItem()
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
+        self.navigationItem.rightBarButtonItem = addButton
+
+        self.resultSearchController = ({
                 let controller = UISearchController(searchResultsController: nil)
                 controller.searchResultsUpdater = self
                 controller.dimsBackgroundDuringPresentation = false
                 controller.searchBar.sizeToFit()
+//                controller.
                 
                 self.tableView.tableHeaderView = controller.searchBar
                 
                 return controller
-            })()
+        })()
             
-            // Reload the table
-            self.tableView.reloadData()
+        // Reload the table
+        self.tableView.reloadData()
 
     }
     
@@ -88,7 +86,7 @@ class MasterTableViewController: UITableViewController, UISearchResultsUpdating 
             return cell
         }
         else {
-            cell.textLabel!.text = object.note
+            cell.textLabel!.text = object.note["title"]!
             return cell
         }
         
@@ -99,7 +97,7 @@ class MasterTableViewController: UITableViewController, UISearchResultsUpdating 
         filteredTableData.removeAll(keepCapacity: false)
         var tempArray = [String]()
         for index in allNotes{
-            tempArray.append(allNotes[index].note)
+            tempArray.append(index.note["title"]!)
         }
         let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text)
         let array = (tempArray as NSArray).filteredArrayUsingPredicate(searchPredicate)
@@ -108,10 +106,6 @@ class MasterTableViewController: UITableViewController, UISearchResultsUpdating 
         self.tableView.reloadData()
     }
 
-    //update table values
-//    override func viewDidAppear(animated: Bool) {
-//        toDoListTable.reloadData()
-//    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -157,6 +151,9 @@ class MasterTableViewController: UITableViewController, UISearchResultsUpdating 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
+        self.resultSearchController.searchBar.resignFirstResponder()
+        self.resultSearchController.searchBar.hidden = true
+        self.resultSearchController.navigationController?.setNavigationBarHidden(false, animated: false)
         if segue.identifier == "arrayDetail"{
             if let indexPath = self.tableView.indexPathForSelectedRow(){
                 let object = allNotes[indexPath.row]

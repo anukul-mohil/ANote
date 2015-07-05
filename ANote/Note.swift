@@ -17,20 +17,20 @@ let kAllNotes:String = "notes"
 
 class Note: NSObject {
     var date:String
-    var note:String
+    var note = [String:String]()
     
     override init() {
         date = NSDate().description
-        note = ""
+        note = ["title":"","data":""]
     }
     
     
     //save array of dictionary and save it to persisitent storage
     class func saveNotes(){
-        var aDictionary = Dictionary<String,String>()
+        var aDictionary = [String:[String:String]]()
         //looping thru notes and convert them to dictionary
         for var i:Int = 0;i < allNotes.count; i++ {
-            if(!(allNotes[i].note == "")){
+            if(!(allNotes[i].note["data"] == "")){
             aDictionary.updateValue(allNotes[i].note, forKey: allNotes[i].date)
             }
         }
@@ -41,16 +41,15 @@ class Note: NSObject {
    
     //Load data from persistent storage in to table-allNotes
     class func loadNotes(){
-        var savedData :[String:String]?
+        var savedData :[String:[String:String]]?
         
         var defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
-//        println(defaults.objectForKey(kAllNotes))
-        savedData = defaults.objectForKey(kAllNotes) as? [String : String]
-//        println("LoadNotes method executed")
-//        println("Saved data is \(savedData)")
+
+        savedData = defaults.objectForKey(kAllNotes) as? [String : [String:String]]
+
         //unwrap optional data and see if it exists
-        if let data:[String:String] = savedData {
-//            allNotes = []
+        if let data:[String:[String:String]] = savedData {
+            allNotes = []
             for (date,note) in data {
                 var n:Note = Note()
                 n.date = date
@@ -58,5 +57,6 @@ class Note: NSObject {
                 allNotes.append(n)
             }
         }
+        
     }
 }

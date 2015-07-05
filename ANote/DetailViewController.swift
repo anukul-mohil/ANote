@@ -17,9 +17,9 @@ class DetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.configureView()
         // Do any additional setup after loading the view.
-        notesDescription.text = allNotes[currentNoteIndex].note
+        notesTitle.text  = allNotes[currentNoteIndex].note["title"]
+        notesDescription.text = allNotes[currentNoteIndex].note["data"]
         notesDescription.becomeFirstResponder()
     }
 
@@ -28,12 +28,10 @@ class DetailViewController: UIViewController {
         
         if (notesDescription.text.isEmpty) {
             allNotes.removeAtIndex(currentNoteIndex)
-            println("Index to be deleted is \(currentNoteIndex)")
+//            println("Index to be deleted is \(currentNoteIndex)")
         }
-//        for var i:Int = 0;i < allNotes.count; i++ {
-        for var i:Int = 0;i < allNotes.count; i++ {
-            println("Array data is \(allNotes[i].note)")
-        }
+        //Reload table to prevent blank empty entry on top
+        noteTable?.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,14 +40,13 @@ class DetailViewController: UIViewController {
     }
     
     @IBAction func saveButton(sender: AnyObject) {
-        if notesDescription.text == "" {
-            allNotes.removeAtIndex(currentNoteIndex)
+        if notesDescription.text != "" {
+            allNotes[currentNoteIndex].note["data"]! = notesDescription.text
+            allNotes[currentNoteIndex].note["title"]! = notesTitle.text
+            Note.saveNotes()
         }
-        else {
-            allNotes[currentNoteIndex].note = notesDescription.text
-        }
-        Note.saveNotes()
-        noteTable?.reloadData()
+        
+//        noteTable?.reloadData()
         self.navigationController!.popViewControllerAnimated(true)
     }
     
