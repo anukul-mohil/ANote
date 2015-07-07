@@ -33,7 +33,7 @@ class MasterTableViewController: UITableViewController, UISearchResultsUpdating 
                 controller.searchResultsUpdater = self
                 controller.dimsBackgroundDuringPresentation = false
                 controller.searchBar.sizeToFit()
-//                controller.
+
                 
                 self.tableView.tableHeaderView = controller.searchBar
                 
@@ -150,9 +150,10 @@ class MasterTableViewController: UITableViewController, UISearchResultsUpdating 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using [segue destinationViewController].
+        
+        //Hide the search bar when clicked on the filtered item
+        resultSearchController.active = false
         // Pass the selected object to the new view controller.
-        self.resultSearchController.searchBar.resignFirstResponder()
-        self.resultSearchController.searchBar.hidden = true
         self.resultSearchController.navigationController?.setNavigationBarHidden(false, animated: false)
         if segue.identifier == "arrayDetail"{
             if let indexPath = self.tableView.indexPathForSelectedRow(){

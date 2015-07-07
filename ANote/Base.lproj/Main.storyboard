@@ -68,7 +68,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aAT-sW-He4">
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aAT-sW-He4">
                                 <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                             </navigationBar>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PXQ-ZR-DqQ">
@@ -82,17 +82,29 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FUO-d1-Xon">
+                                <rect key="frame" x="0.0" y="512" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="iUm-lQ-aVc"/>
+                                    <barButtonItem image="Alarm Clock-32" id="QZC-0a-qvL"/>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="mGY-nY-mnb" firstAttribute="top" secondItem="FZy-UI-Fc1" secondAttribute="bottom" constant="8" symbolic="YES" id="1XU-ZU-ApB"/>
-                            <constraint firstItem="PXQ-ZR-DqQ" firstAttribute="trailing" secondItem="F3Z-ur-iBA" secondAttribute="trailingMargin" id="BAD-B9-XRN"/>
-                            <constraint firstItem="PXQ-ZR-DqQ" firstAttribute="leading" secondItem="F3Z-ur-iBA" secondAttribute="leadingMargin" id="EAL-W6-J0Y"/>
-                            <constraint firstItem="FZy-UI-Fc1" firstAttribute="centerX" secondItem="aAT-sW-He4" secondAttribute="centerX" id="EPQ-yh-dk0"/>
-                            <constraint firstItem="PXQ-ZR-DqQ" firstAttribute="top" secondItem="ncJ-Ij-oxG" secondAttribute="bottom" constant="28" id="KSl-dj-zpi"/>
-                            <constraint firstItem="FZy-UI-Fc1" firstAttribute="leading" secondItem="PXQ-ZR-DqQ" secondAttribute="leading" id="Npw-J2-XYz"/>
-                            <constraint firstItem="PXQ-ZR-DqQ" firstAttribute="centerX" secondItem="aAT-sW-He4" secondAttribute="centerX" id="gf5-yt-lCU"/>
-                            <constraint firstItem="FZy-UI-Fc1" firstAttribute="top" secondItem="PXQ-ZR-DqQ" secondAttribute="bottom" constant="19" id="zB0-ag-h96"/>
+                            <constraint firstItem="PXQ-ZR-DqQ" firstAttribute="leading" secondItem="FZy-UI-Fc1" secondAttribute="leading" id="7Rh-Vq-gNV"/>
+                            <constraint firstItem="aAT-sW-He4" firstAttribute="bottom" secondItem="ncJ-Ij-oxG" secondAttribute="bottom" id="7ie-7G-Y7K"/>
+                            <constraint firstItem="FUO-d1-Xon" firstAttribute="trailing" secondItem="aAT-sW-He4" secondAttribute="trailing" id="FBm-2x-dT0"/>
+                            <constraint firstItem="aAT-sW-He4" firstAttribute="leading" secondItem="F3Z-ur-iBA" secondAttribute="leading" id="GXH-3S-zpf"/>
+                            <constraint firstAttribute="trailing" secondItem="aAT-sW-He4" secondAttribute="trailing" id="Jfs-G0-YtN"/>
+                            <constraint firstItem="FZy-UI-Fc1" firstAttribute="top" secondItem="PXQ-ZR-DqQ" secondAttribute="bottom" constant="19" id="L5L-ar-9Lk"/>
+                            <constraint firstItem="PXQ-ZR-DqQ" firstAttribute="top" secondItem="ncJ-Ij-oxG" secondAttribute="bottom" constant="28" id="OoD-ZB-Qzc"/>
+                            <constraint firstItem="mGY-nY-mnb" firstAttribute="top" secondItem="FZy-UI-Fc1" secondAttribute="bottom" constant="8" symbolic="YES" id="QI2-FT-uTZ"/>
+                            <constraint firstItem="PXQ-ZR-DqQ" firstAttribute="centerX" secondItem="aAT-sW-He4" secondAttribute="centerX" id="QX9-Ae-aIM"/>
+                            <constraint firstItem="FZy-UI-Fc1" firstAttribute="leading" secondItem="F3Z-ur-iBA" secondAttribute="leadingMargin" id="RQm-6a-iIk"/>
+                            <constraint firstItem="aAT-sW-He4" firstAttribute="leading" secondItem="FUO-d1-Xon" secondAttribute="leading" id="bXd-cA-VOu"/>
+                            <constraint firstItem="PXQ-ZR-DqQ" firstAttribute="trailing" secondItem="FZy-UI-Fc1" secondAttribute="trailing" id="me0-tc-giN"/>
+                            <constraint firstItem="FUO-d1-Xon" firstAttribute="bottom" secondItem="mGY-nY-mnb" secondAttribute="top" id="vus-7N-9ng"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -114,4 +126,7 @@
             <point key="canvasLocation" x="-187" y="290"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Alarm Clock-32" width="32" height="32"/>
+    </resources>
 </document>
