@@ -13,6 +13,8 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var notesTitle: UITextField!
     @IBOutlet weak var notesDescription: UITextView!
 
+    @IBOutlet weak var notesToolBar: UIToolbar!
+    
     var flag = true
     
     override func viewDidLoad() {
@@ -20,6 +22,9 @@ class DetailViewController: UIViewController {
         // Do any additional setup after loading the view.
         notesTitle.text  = allNotes[currentNoteIndex].note["title"]
         notesDescription.text = allNotes[currentNoteIndex].note["data"]
+        //ios8 requires this
+        self.notesToolBar.removeFromSuperview()
+        notesDescription.inputAccessoryView = notesToolBar
         notesDescription.becomeFirstResponder()
     }
 

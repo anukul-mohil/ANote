@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Jew-9z-LBD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Jew-9z-LBD">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -86,7 +86,13 @@
                                 <rect key="frame" x="0.0" y="512" width="600" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="iUm-lQ-aVc"/>
-                                    <barButtonItem image="Alarm Clock-32" id="QZC-0a-qvL"/>
+                                    <barButtonItem image="Alarm Clock-32" id="QZC-0a-qvL">
+                                        <connections>
+                                            <segue destination="vh7-h0-bjX" kind="popoverPresentation" popoverAnchorBarButtonItem="QZC-0a-qvL" id="lik-2n-aV8">
+                                                <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                            </segue>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -119,11 +125,68 @@
                     <connections>
                         <outlet property="notesDescription" destination="FZy-UI-Fc1" id="fc2-t9-N8F"/>
                         <outlet property="notesTitle" destination="PXQ-ZR-DqQ" id="3mE-Zk-SBY"/>
+                        <outlet property="notesToolBar" destination="FUO-d1-Xon" id="988-Tt-yyy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wQ6-t8-9rw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-187" y="290"/>
+            <point key="canvasLocation" x="-871" y="802"/>
+        </scene>
+        <!--Date Picker Controller-->
+        <scene sceneID="DIe-Rg-yqE">
+            <objects>
+                <viewController id="vh7-h0-bjX" customClass="DatePickerController" customModule="ANote" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4HM-hl-9Aw"/>
+                        <viewControllerLayoutGuide type="bottom" id="PGa-4z-Ygi"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2la-us-S6T">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="dIR-5L-7dN">
+                                <rect key="frame" x="0.0" y="219" width="600" height="162"/>
+                                <date key="date" timeIntervalSinceReferenceDate="458006806.552432">
+                                    <!--2015-07-08 00:06:46 +0000-->
+                                </date>
+                            </datePicker>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kOh-N5-a4J">
+                                <rect key="frame" x="244" y="478" width="113" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="113" id="ADT-id-eVs"/>
+                                </constraints>
+                                <state key="normal" title="Set Alarm">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="setAlarm:" destination="vh7-h0-bjX" eventType="touchUpInside" id="Flv-QO-LCY"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time based Notification" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZfW-3D-Mct">
+                                <rect key="frame" x="209" y="65" width="182" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="PGa-4z-Ygi" firstAttribute="top" secondItem="kOh-N5-a4J" secondAttribute="bottom" constant="92" id="011-Lc-mXS"/>
+                            <constraint firstItem="ZfW-3D-Mct" firstAttribute="top" secondItem="4HM-hl-9Aw" secondAttribute="bottom" constant="45" id="4LF-Bx-W7i"/>
+                            <constraint firstAttribute="trailing" secondItem="dIR-5L-7dN" secondAttribute="trailing" id="AYa-wk-NQw"/>
+                            <constraint firstItem="dIR-5L-7dN" firstAttribute="centerY" secondItem="2la-us-S6T" secondAttribute="centerY" id="JxT-aO-5oR"/>
+                            <constraint firstItem="dIR-5L-7dN" firstAttribute="centerX" secondItem="ZfW-3D-Mct" secondAttribute="centerX" id="Uis-fc-rVz"/>
+                            <constraint firstItem="dIR-5L-7dN" firstAttribute="leading" secondItem="2la-us-S6T" secondAttribute="leading" id="c2a-za-lcJ"/>
+                            <constraint firstItem="kOh-N5-a4J" firstAttribute="centerX" secondItem="dIR-5L-7dN" secondAttribute="centerX" id="om7-Lb-ofw"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="datePicker" destination="dIR-5L-7dN" id="xRb-5u-Rlf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lBf-vm-2yY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1691" y="810"/>
         </scene>
     </scenes>
     <resources>
