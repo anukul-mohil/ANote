@@ -43,7 +43,7 @@ class Note: NSObject {
     class func loadNotes(){
         var savedData :[String:[String:String]]?
         
-        var defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        let defaults:NSUserDefaults = NSUserDefaults.standardUserDefaults()
 
         savedData = defaults.objectForKey(kAllNotes) as? [String : [String:String]]
 
@@ -51,7 +51,7 @@ class Note: NSObject {
         if let data:[String:[String:String]] = savedData {
             allNotes = []
             for (date,note) in data {
-                var n:Note = Note()
+                let n:Note = Note()
                 n.date = date
                 n.note = note
                 allNotes.append(n)

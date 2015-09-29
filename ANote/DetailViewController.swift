@@ -47,7 +47,7 @@ class DetailViewController: UIViewController {
     @IBAction func saveButton(sender: AnyObject) {
         if notesDescription.text != "" {
             allNotes[currentNoteIndex].note["data"]! = notesDescription.text
-            allNotes[currentNoteIndex].note["title"]! = notesTitle.text
+            allNotes[currentNoteIndex].note["title"]! = notesTitle.text!
             Note.saveNotes()
         }
         

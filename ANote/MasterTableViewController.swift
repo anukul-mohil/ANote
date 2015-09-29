@@ -12,7 +12,7 @@ class MasterTableViewController: UITableViewController, UISearchResultsUpdating 
     
     //Global variables
     var filteredTableData = [String]()
-    var resultSearchController = UISearchController()
+    var resultSearchController:UISearchController!
     
     @IBOutlet var toDoListTable: UITableView!
     
@@ -74,7 +74,7 @@ class MasterTableViewController: UITableViewController, UISearchResultsUpdating 
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) 
 
         // Configure the cell...
 //        cell.textLabel!.text = titlesArray[indexPath.row]
@@ -99,7 +99,7 @@ class MasterTableViewController: UITableViewController, UISearchResultsUpdating 
         for index in allNotes{
             tempArray.append(index.note["title"]!)
         }
-        let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text)
+        let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text!)
         let array = (tempArray as NSArray).filteredArrayUsingPredicate(searchPredicate)
         filteredTableData = array as! [String]
         
@@ -155,9 +155,10 @@ class MasterTableViewController: UITableViewController, UISearchResultsUpdating 
         resultSearchController.active = false
         // Pass the selected object to the new view controller.
         self.resultSearchController.navigationController?.setNavigationBarHidden(false, animated: false)
+//        self.navigationController?.setNavigationBarHidden(false, animated: false)
         if segue.identifier == "arrayDetail"{
-            if let indexPath = self.tableView.indexPathForSelectedRow(){
-                let object = allNotes[indexPath.row]
+            if let indexPath = self.tableView.indexPathForSelectedRow{
+                _ = allNotes[indexPath.row]
                 currentNoteIndex = indexPath.row
                 }
             else{

@@ -16,64 +16,78 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        //Actions
-        var firstAction:UIMutableUserNotificationAction = UIMutableUserNotificationAction()
-        firstAction.identifier = "First_Action"
-        firstAction.title = "First Action"
+        // Actions
+        let firstAction:UIMutableUserNotificationAction = UIMutableUserNotificationAction()
+        firstAction.identifier = "FIRST_ACTION"
+        firstAction.title = "Snooze"
         
-        //Misc features
-        //Background notification i.e doesn't launches an app but does something in the background depending on the result of the notification's answer
         firstAction.activationMode = UIUserNotificationActivationMode.Background
         firstAction.destructive = true
         firstAction.authenticationRequired = false
         
-        var secondAction:UIMutableUserNotificationAction = UIMutableUserNotificationAction()
-        secondAction.identifier = "Second_Action"
+        let secondAction:UIMutableUserNotificationAction = UIMutableUserNotificationAction()
+        secondAction.identifier = "SECOND_ACTION"
         secondAction.title = "Second Action"
         
-        //Misc features
-        //Background notification i.e doesn't launches an app but does something in the background depending on the result of the notification's answer
         secondAction.activationMode = UIUserNotificationActivationMode.Foreground
         secondAction.destructive = false
         secondAction.authenticationRequired = false
         
-        
-        var thirdAction:UIMutableUserNotificationAction = UIMutableUserNotificationAction()
-        thirdAction.identifier = "Third_Action"
+        let thirdAction:UIMutableUserNotificationAction = UIMutableUserNotificationAction()
+        thirdAction.identifier = "THIRD_ACTION"
         thirdAction.title = "Third Action"
         
-        //Misc features
-        //Background notification i.e doesn't launches an app but does something in the background depending on the result of the notification's answer
         thirdAction.activationMode = UIUserNotificationActivationMode.Background
         thirdAction.destructive = false
         thirdAction.authenticationRequired = false
         
-        //Category
         
-        var firstCategory:UIMutableUserNotificationCategory = UIMutableUserNotificationCategory()
-        firstCategory.identifier = "First_category"
+        // category
         
-        let defaultActions:NSArray = [firstAction,secondAction,thirdAction]
-        let miinimalActions:NSArray = [firstAction,secondAction]
-        //Add these actions to the cateogry
-        firstCategory.setActions(defaultActions as [AnyObject], forContext: UIUserNotificationActionContext.Default)
-        firstCategory.setActions(miinimalActions as [AnyObject], forContext: UIUserNotificationActionContext.Minimal)
+        let firstCategory:UIMutableUserNotificationCategory = UIMutableUserNotificationCategory()
+        firstCategory.identifier = "FIRST_CATEGORY"
         
-        //NSSet for all categories
+        let defaultActions:NSArray = [firstAction, secondAction, thirdAction]
+        let minimalActions:NSArray = [firstAction, secondAction]
         
-        let categories:NSSet = NSSet(object: firstCategory)
+        firstCategory.setActions(defaultActions as? [UIUserNotificationAction] , forContext: UIUserNotificationActionContext.Default)
+        firstCategory.setActions(minimalActions as? [UIUserNotificationAction] , forContext: UIUserNotificationActionContext.Minimal)
         
+        // NSSet of all our categories
         
-        //Types of notifications
-        let types:UIUserNotificationType = UIUserNotificationType.Alert | UIUserNotificationType.Badge
+        let categories:NSSet = NSSet(objects: firstCategory)
         
-        //Settings for the above mentioned types
-        let mySettings:UIUserNotificationSettings = UIUserNotificationSettings(forTypes: types, categories: categories as Set<NSObject>)
-        
-        //Registering this appliation with the above settings
+        let mySettings = UIUserNotificationSettings(forTypes: [.Alert, .Badge], categories: categories as? Set<UIUserNotificationCategory>)
         UIApplication.sharedApplication().registerUserNotificationSettings(mySettings)
         
+
+        
+//        let types:UIUserNotificationType = (UIUserNotificationType.Alert | UIUserNotificationType.Badge)
+//        
+//        let mySettings:UIUserNotificationSettings = UIUserNotificationSettings(forTypes: types, categories: categories as! Set<UIUserNotificationCategory>)
+        
+//        UIApplication.sharedApplication().registerUserNotificationSettings(mySettings)
+        
+        
         return true
+    }
+    
+    func application(application: UIApplication,
+        handleActionWithIdentifier identifier:String?,
+        forLocalNotification notification:UILocalNotification,
+        completionHandler: (() -> Void)){
+            
+            if (identifier == "FIRST_ACTION"){
+                
+                NSNotificationCenter.defaultCenter().postNotificationName("actionOnePressed", object: nil)
+                
+            }else if (identifier == "SECOND_ACTION"){
+                NSNotificationCenter.defaultCenter().postNotificationName("actionTwoPressed", object: nil)
+                
+            }
+            
+            completionHandler()
+            
     }
 
     func applicationWillResignActive(application: UIApplication) {

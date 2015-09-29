@@ -17,18 +17,19 @@ class DatePickerController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"drawAShape:", name: "actionOnePressed", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:"showAMessage:", name: "actionTwoPressed", object: nil)
+        
         notification.category = "FIRST_CATEGORY"
         notification.alertBody = "What have you learned today ?"
         notification.timeZone = NSTimeZone.defaultTimeZone()
         datePicker.datePickerMode = UIDatePickerMode.DateAndTime
         
-        //NSNotificationCenter.defaultCenter().addObserver(self, selector: "showAMessage", name: <#String?#>, object: <#AnyObject?#>)
-
-        
     }
     
     @IBAction func setAlarm(sender: AnyObject) {
-        var format = "YYYY-MM-DD HH:MM:SS"
+        _ = "YYYY-MM-DD HH:MM:SS"
         //notificationLabel.text = self.datePicker.date.descriptionWithLocale(format)
         self.notification.fireDate = self.datePicker.date
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
@@ -40,6 +41,22 @@ class DatePickerController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func drawAShape(notification:NSNotification){
+        let view:UIView = UIView(frame:CGRectMake(10, 10, 100, 100))
+        view.backgroundColor = UIColor.redColor()
+        
+        self.view.addSubview(view)
+        
+    }
+    
+    func showAMessage(notification:NSNotification){
+        let message:UIAlertController = UIAlertController(title: "A Notification Message", message: "Hello there", preferredStyle: UIAlertControllerStyle.Alert)
+        message.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+        
+        self.presentViewController(message, animated: true, completion: nil)
+        
     }
     
   
