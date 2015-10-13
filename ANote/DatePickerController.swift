@@ -16,6 +16,7 @@ class DatePickerController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("Just after segue")
         // Do any additional setup after loading the view.
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector:"drawAShape:", name: "actionOnePressed", object: nil)
@@ -25,6 +26,10 @@ class DatePickerController: UIViewController {
         notification.alertBody = "What have you learned today ?"
         notification.timeZone = NSTimeZone.defaultTimeZone()
         datePicker.datePickerMode = UIDatePickerMode.DateAndTime
+        //To enable users to tap outside writing space to dismiss keyboard
+        self.view.endEditing(true)
+        
+//        datePicker.inputView = datePicker
         
     }
     
@@ -62,8 +67,8 @@ class DatePickerController: UIViewController {
   
     
     //To enable users to tap outside writing space to dismiss keyboard
-    //    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-    //        self.view.endEditing(true)
-    //    }
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+            self.view.endEditing(true)
+    }
     
 }

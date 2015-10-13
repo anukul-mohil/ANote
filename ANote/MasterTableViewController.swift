@@ -12,7 +12,7 @@ class MasterTableViewController: UITableViewController, UISearchResultsUpdating 
     
     //Global variables
     var filteredTableData = [String]()
-    var resultSearchController:UISearchController!
+    var resultSearchController = UISearchController()
     
     @IBOutlet var toDoListTable: UITableView!
     
@@ -27,21 +27,16 @@ class MasterTableViewController: UITableViewController, UISearchResultsUpdating 
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
         self.navigationItem.rightBarButtonItem = addButton
-
-        self.resultSearchController = ({
-                let controller = UISearchController(searchResultsController: nil)
-                controller.searchResultsUpdater = self
-                controller.dimsBackgroundDuringPresentation = false
-                controller.searchBar.sizeToFit()
-
-                
-                self.tableView.tableHeaderView = controller.searchBar
-                
-                return controller
-        })()
+      
+        self.resultSearchController = UISearchController(searchResultsController: nil)
+        self.resultSearchController.searchResultsUpdater = self
+        self.resultSearchController.dimsBackgroundDuringPresentation = false
+        self.resultSearchController.searchBar.sizeToFit()
             
+        self.tableView.tableHeaderView = self.resultSearchController.searchBar
         // Reload the table
         self.tableView.reloadData()
+            print("view did load exec successfully")
 
     }
     
@@ -51,10 +46,12 @@ class MasterTableViewController: UITableViewController, UISearchResultsUpdating 
     }
 
     func insertNewObject(sender: AnyObject){
+        print("Inserting a new object")
         allNotes.insert(Note(), atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
         self.performSegueWithIdentifier("arrayDetail", sender: self)
+        print("Performed segue successfully")
     }
     // MARK: - Table view data source
 
@@ -63,7 +60,7 @@ class MasterTableViewController: UITableViewController, UISearchResultsUpdating 
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+        //Uncomment the following lines
         if (self.resultSearchController.active) {
             return self.filteredTableData.count
         }
@@ -74,34 +71,35 @@ class MasterTableViewController: UITableViewController, UISearchResultsUpdating 
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) 
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as UITableViewCell?
 
         // Configure the cell...
 //        cell.textLabel!.text = titlesArray[indexPath.row]
         let object = allNotes[indexPath.row]
         
         if (self.resultSearchController.active) {
-            cell.textLabel?.text = filteredTableData[indexPath.row]
+            cell!.textLabel?.text = filteredTableData[indexPath.row]
             
-            return cell
+            return cell!
         }
         else {
-            cell.textLabel!.text = object.note["title"]!
-            return cell
+            cell!.textLabel!.text = object.note["title"]!
+            return cell!
         }
         
     }
     
     func updateSearchResultsForSearchController(searchController: UISearchController)
     {
-        filteredTableData.removeAll(keepCapacity: false)
+        self.filteredTableData.removeAll(keepCapacity: false)
+        
         var tempArray = [String]()
         for index in allNotes{
             tempArray.append(index.note["title"]!)
         }
         let searchPredicate = NSPredicate(format: "SELF CONTAINS[c] %@", searchController.searchBar.text!)
         let array = (tempArray as NSArray).filteredArrayUsingPredicate(searchPredicate)
-        filteredTableData = array as! [String]
+        self.filteredTableData = array as! [String]
         
         self.tableView.reloadData()
     }
@@ -152,6 +150,7 @@ class MasterTableViewController: UITableViewController, UISearchResultsUpdating 
         // Get the new view controller using [segue destinationViewController].
         
         //Hide the search bar when clicked on the filtered item
+        print("Preparing for segue")
         resultSearchController.active = false
         // Pass the selected object to the new view controller.
         self.resultSearchController.navigationController?.setNavigationBarHidden(false, animated: false)
@@ -165,6 +164,6 @@ class MasterTableViewController: UITableViewController, UISearchResultsUpdating 
                 currentNoteIndex = 0
             }
         }
-
+        print("Prepare for segue completed")
     }
 }

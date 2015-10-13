@@ -18,14 +18,16 @@ class DetailViewController: UIViewController {
     var flag = true
     
     override func viewDidLoad() {
+        print("Preparing for viewdidload()")
         super.viewDidLoad()
+        print("Detail view loaded")
         // Do any additional setup after loading the view.
         notesTitle.text  = allNotes[currentNoteIndex].note["title"]
         notesDescription.text = allNotes[currentNoteIndex].note["data"]
         //ios8 requires this
         self.notesToolBar.removeFromSuperview()
         notesDescription.inputAccessoryView = notesToolBar
-        notesDescription.becomeFirstResponder()
+//        notesDescription.becomeFirstResponder()
     }
 
     override func viewWillDisappear(animated: Bool) {
@@ -37,6 +39,11 @@ class DetailViewController: UIViewController {
         }
         //Reload table to prevent blank empty entry on top
         noteTable?.reloadData()
+        notesDescription.resignFirstResponder()
+        notesTitle.resignFirstResponder()
+        self.view.endEditing(true)
+        print("Just before segue")
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,8 +64,8 @@ class DetailViewController: UIViewController {
     
 
     //To enable users to tap outside writing space to dismiss keyboard
-//    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-//        self.view.endEditing(true)
-//    }
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 
 }
